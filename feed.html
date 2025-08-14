@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="icon-lobo.png" type="image/png" />
+  <title>Meu Feed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Paleta de cores:
+    #717476
+    #3D4633
+    #101511
+    #222922
+    */
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #222922;
+      color: #717476;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: #101511;
+      border-bottom: 1px solid #3D4633;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .top-bar-left .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 2px solid #717476;
+    }
+
+    .top-bar-left .title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      color: #717476;
+    }
+
+    .top-bar-right .menu-icon {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      filter: invert(50%);
+    }
+
+    .menu {
+      display: none;
+      background-color: #101511;
+      padding: 10px 20px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      position: absolute;
+      top: 70px; /* Ajuste para a altura da top-bar */
+      right: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+    
+    .menu.open {
+      display: block;
+    }
+
+    .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu ul li {
+      margin: 10px 0;
+    }
+
+    .menu ul li a {
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      color: #717476;
+      font-size: 1rem;
+      display: block;
+      padding: 5px;
+    }
+
+    .menu ul li a:hover {
+      background-color: #222922;
+      border-radius: 4px;
+    }
+
+    .feed-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+
+    .post {
+      background-color: #101511;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #3D4633;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .post-header .profile-pic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 2px solid #717476;
+    }
+
+    .post-user {
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #717476;
+    }
+
+    .post-date {
+      font-size: 0.9rem;
+      color: #3D4633;
+    }
+
+    .post-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 10px 0;
+      border-bottom: 1px solid #3D4633;
+      padding-bottom: 10px;
+      text-align: justify;
+    }
+    
+    /* Remove a borda do último parágrafo de cada post */
+    .post-content p:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .post-content .post-image-description {
+      font-size: 1rem;
+      color: #717476;
+      text-align: center;
+      margin-top: 15px;
+      border: 1px solid #3D4633;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .post-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-top: 15px;
+    }
+    
+    .audio-player {
+        width: 100%;
+        margin-top: 15px;
+    }
+    
+    @media (max-width: 600px) {
+      .menu {
+        width: 100%;
+        border-radius: 0;
+        top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+      <span class="title">Meu feed</span>
+    </div>
+    <div class="top-bar-right">
+      <img class="menu-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png" alt="Menu" id="menu-hamburguer" />
+    </div>
+  </header>
+
+  <nav class="menu" id="menu-nav">
+    <ul>
+      <li><a href="feed.html">Feed</a></li>
+      <li><a href="lembrancas.html">Galeria</a></li>
+      <li><a href="index.html">Sair</a></li>
+    </ul>
+  </nav>
+
+  <div class="feed-container">
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+          Será que as vezes você pensa em mim?
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+          - eu te amava - Ela sussurra.<br>
+          - eu sei<br>
+          - Você partiu meu coração...<br>
+          - Eu sei disso também.
+          </p>
+      </div>
+    </div>
+    
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+          Ruim não é soltar, é ser o único tentando segurar.
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+           Você foi o meu quase,<br>
+           mais eu sou o meu próprio para sempre.<br><br>
+           - Que seja lomgo o meu reinado.
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Saudades...
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Ele pode me dar tudo, mas isso nunca vai ser o suficiente porque ele não é ELE
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Você me acostumou com o seu Bom dia
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Eu merecia um final, não uma covardia vestida de silencio
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Você acredita que eu quase te liguei ontom? é... verdade<br>
+            (Só que eu ja perdi as contas de quantos 'ontens' já se passaram...)
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            "- Você nunca vai conseguir se encontrar nele se estiver perdido em outra pessoa"
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            "O nosso {quase} vai pra sempre me assombrar.
+E um dia o seu nome não vai mais me fazer sorrir.
+Agora eu tenho que me lembrar de você por mais tempo do que eu te conheço.
+Eu fui apenas uma frase em sua vida e ainda assim enchi as bibliotecas com pensamentos sobre você.
+Nossa história não terminou bem, mas ainda é a melhor que eu conheço.
+E, por favor, me diga que eu não sou tão esquecível quanto seu silêncio está me fazendo sentir.
+Só porque eu deixei você ir, não significa que eu queria.
+Eu me pergunto o que passa pela sua cabeça quando alguém menciona o meu nome.
+Não se esqueça das noites em que tudo parecia bem e eu me pergunto se alguma vez pensamos um no outro ao mesmo tempo.
+Eu posso mentir para todos ao meu redor, mas não posso mentir para o buraco no meu peito.
+A dor é a lembrança do amor, é a nossa prova de que um dia amamos.
+A dor é o recibo que mostramos para o mundo e dizemos: "Olha, o amor já foi meu".
+"Eu amei como ninguém".
+"Aqui está a prova de que eu paguei o preço".
+Eu ainda acordo com coisas pra te contar.<br>
+Ele não me lembra nada, tudo me lembra ele."
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            Será mesmo que existil ou foi coisa que eu invente?..
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+          <p>
+            - Ele não é você<br>
+            - O que?<br>
+            - ELE. NÃO. É. VOCÊ!
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>
+            EU NÃO SEI COMO FAZER MEU CÉLEBRO ENTENDER QUE NÃO ESTAMOS MAIS JUNTOS
+          </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>
+            Isso é o que chamo de absurdo:<br>
+            Saber que você vai<br>
+            Receber sal,<br>
+            E ainda assim esperar receber açúcar<br>
+            - VC PODE TER IDO EMBORA, MAIS AINDA TENHO DOR NO ESTÔMAGO
+          </p>
+      </div>
+    </div>
+
+    <div class="post" data-card-musica="true">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">01 de Agoato de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Se eu tivesse feito tudo diferente... estaria tudo bem entre a gente?</p>
+
+       <audio class="audio-player" preload="none" controls>
+          <source src="audios/QuandoOSolAcordou.mpeg" type="audio/mpeg" />
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </div>
+    
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Toda noite antes de dormir penso um pouco na gente... vc n sai da minha mente.</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Abrir mão de mim<br>
+              Me deixar ir<br>
+              Queria que você tivesseMedo de me perder<br>
+              Mas foi você mesmo quem<br>
+              Me mandou embora...</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>🎶🎵
+"Se com alguém já está<br>
+Só me avise<br>
+Vou me afastar<br>
+E eu não quero fazer tempestade<br>
+Muito menos atrapalhar<br>
+<br>
+Não seria justo contigo<br>
+Sempre esteve junto comigo<br>
+Desejo o melhor para você finalmente<br>
+Seguir os seus objetivos<br>
+<br>
+Mas se um dia quiser voltar<br>
+Me encontre no mesmo lugar<br>
+Em cima do palco<br>
+Cantando bem alto<br>
+O quanto foi bom te amar"<br>
+           </p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Se eu pedir cê volta?</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Para de querer voltar p ele, você não gosta mais dele, você gosta das memorias</p>
+      </div>
+    </div>
+
+    <div class="post" data-card-musica="true">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">01 de Agoato de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Ele quem terminou e eu que tive que seguir em frente juntando os caquinhos... e ludando com a falta</p>
+
+       <audio class="audio-player" preload="none" controls>
+          <source src="audios/HojeEstaFazendo1Ano.mpeg" type="audio/mpeg" />
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Pior dor?</p>
+           <p>eu estou tentando te esquecer, mas também estou esperando você voltar</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>- O meu siêncio é completo de SAUDADE</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Você foi, sem dúvida, uma daquelas pessoas raras que a vida faz a gente cruzar, às vezes por pouco tempo, mas o suficiente para marcar para sempre. Desde o primeiro instante, eu soube, você não seria só mais alguém que passa, você seria lembrança, aprendizado, memória bonita guardada no peito para sempre. Te conhecer foi como viver uma daquelas histórias que a gente nunca esquece, uma daquelas que nos prendem, que nos faz querer estar ali, vivendo cada detalhe, cada conversa, cada silêncio, cada momento.<br><br>
+E quanto mais eu te conhecia, mais eu percebia que, de alguma forma, você também me fazia me conhecer melhor. Porque havia algo em você que refletia partes de mim, partes que, talvez, eu nem sabia que existiam.<br><br>
+E não, você não foi só uma presença passageira. Você foi alguém que me transformou, que fez meus dias mais leves, que me trouxe reflexões, sorrisos sinceros e aquela sensação boa que a vida, de vez em quando, sabe surpreender do jeito mais bonito.<br><br>
+Existem pessoas que passam e simplesmente passam, e existe aquelas que ficam mesmo quando não ficam de fato. Você foi assim, daquelas que a vida leva, mas o coração nunca esquece. Porque tem encontros que são assim, duram pouco no tempo, mas duram para sempre na alma.
+</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Vizinho eu te odeio</p>
+           <p>🎶🎵"Como se o meu coração<br>
+              Fosse feito de aço<br>
+              Pediu pra esquecer<br>
+              Os beijos e abraços<br>
+              E pra machucar<br>
+              Ainda brincou comigo"</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Todo dia é Vizinho? WTF</p>
+           <p>🎶🎵"Que estou morrendo<br>
+Morrendo por dentro (estou morrendo)<br>
+É tanta saudade morando em meu peito, uh<br>
+<br>
+Vida, devolva minhas fantasias<br>
+Meu sonho de viver a vida<br>
+Devolva-me o ar<br>
+Sem teu carinho, meu mundo fica tão vazio<br>
+Os dias quentes são tão frios<br>
+E as noites me trazem<br>
+A dor desse amor"</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>"Ao ponto de sentir saudade, mas não poder ir atrás"</p>
+      </div>
+    </div>
+
+    <div class="post" data-card-musica="true">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">01 de Agoato de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Todo dia 01</p>
+        <p>🎶🎵 "..."</p>
+
+       <audio class="audio-player" preload="none" controls>
+          <source src="audios/AindaTeVejoEmTudo.mpeg" type="audio/mpeg" />
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Barzinho 23:11</p>
+           <p>🎶🎵 "Se eu te ligar não atende,<br>
+              É desespero<br>
+              É culpa desse copo com<br>
+              Whisky e gelo<br>
+              E amanhã eu volto a te<br>
+              Odiar<br>
+              Mas basta eu beber Que<br>
+              Eu volto a te amar
+          </p>
+      </div>
+    </div>
+
+    <div class="post" data-card-musica="true">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">13 de agosto 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>
+          Sim sim<br>
+eu acabei de chegar em casa<br>
+não, eu ainda não comi nada<br>
+sim, eu planejo comer, eventualmente<br>
+não, eu ainda não sei o que<br>
+sim, eu tomei os meus remédios, todos<br>
+não, eu não bebi, ainda<br>
+sim, deu tudo certo na medida do possível<br>
+não, nem tudo foi possível <br>
+sim, eu me sinto sozinha<br>
+não, eu não sei porque<br>
+sim, eu sei que vocês me amam<br>
+não, isso não é uma mensagem de adeus<br>
+sim, eu vou para aí amanhã<br>
+não, eu não vou fazer nenhuma besteira<br>
+sim, eu falei com ele<br>
+não, eu não deveria<br>
+sim, eu sinto saudades<br>
+não, não eu não disse isso ainda<br>
+sim, hoje eu vou chorar até dormir<br>
+não, eu não tenho certeza se eu vou dormir<br>
+sim, eu quero encerrar essa ligação<br>
+não, eu não acredito mais no amor<br>
+sim, eu sou patética até no nosso fim<br>
+não, eu não sei o que fazer com toda essa dor<br>
+Mas enfim, agora eu tenho que comer alguma coisa que eu acabei de chegar, é melhor eu, tchau.
+        </p>
+
+       <audio class="audio-player" preload="none" controls>
+          <source src="audios/SimNao.mpeg" type="audio/mpeg" />
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </div>
+    
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>A dor de ir embora querendo ficar...</p>
+      </div>
+    </div>
+
+    <div class="post" data-card-musica="true">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">13 de agosto 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>"O que que eu faço se é você que eu venero?<br>
+            Ainda te amo, meu amor, ainda te <br>
+            Sem você, não vivo nem um segundo<br>
+            Sem teu amor, fico perdido no mundo<br>
+            Como era bom, amor, te ver sorrindo
+          </p>
+        <p>Ah, que lindo, que lindo<br>
+            E ter você, paixão pra vida inteira<br>
+            Te carinhar, minha linda sereia
+          </p>
+        <p>Vem me dar seu amor<br>
+            Vem que eu quero você<br>
+            Meu bem-querer<br>
+            ..."
+          </p>
+
+       <audio class="audio-player" preload="none" controls>
+          <source src="audios/BemQuerer.mpeg" type="audio/mpeg" />
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">17 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+           <p>Eu tentei entender seu silêncio.
+
+Tentei dar sentido à sua ausência, aos dias que foram se esticando sem você, como se o tempo tivesse desaprendido de passar junto. E, no fundo, acho que eu sabia: algo já havia mudado. Mas não soube aceitar. Ainda não sei, por completo.
+Você foi embora no auge — quando tudo ainda pulsava, quando meu coração batia no ritmo do seu nome. Quando eu acreditava que éramos dois, quando o “nós” parecia mais forte do que qualquer incerteza.
+E talvez esse tenha sido o golpe mais duro: não foi um fim que se construiu. Foi um sumiço. Um afastamento sem motivo explicado, sem um “porquê” que me coubesse nas mãos.
+Você foi quando eu ainda estava chegando. Quando eu ainda me despia de defesas para te amar mais inteiro. Quando eu já te chamava de casa, e você, aos poucos, deixava de me chamar de qualquer coisa.
+Eu não sei se você percebeu, mas me tornei dependente da sua presença — da forma como você olhava pra mim, como me ouvia, como me fazia acreditar que era possível ser amado sem medo.
+E, de repente, tudo aquilo que me fez confiar foi o mesmo que me deixou no escuro.
+Não sei o que te fez ir. Não sei se era sobre mim ou só sobre você. E mesmo que eu imagine mil vezes, isso não muda o que ficou: a sensação de ter sido deixado no meio da travessia, com as mãos ainda estendidas.
+Eu não te escrevo para cobrar explicações. Só precisava nomear o que me feriu, para que isso, enfim, não me machuque mais em silêncio.
+Talvez um dia você entenda o quanto custou partir assim — ou talvez nunca entenda.
+Mas eu espero que, se olhar pra trás, você reconheça: havia alguém ali. Inteiro. Presente. Verdadeiro.
+E que tudo o que você largou sem dizer porquê... um dia volte pra você. Não como vingança. Mas como consciência.
+Essa carta não é um pedido de volta.
+É só a voz de quem aprendeu que o amor, quando não é cuidado, se transforma em cicatriz.
+Mas mesmo assim... ainda é amor.
+E talvez sempre seja.
+
+—</p>   </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+         <p>Toda travessia emocional carrega um destino oculto: o reencontro com quem se é...</p>
+    <p>Depois da ausência do outro, depois da tentativa de manter o que já não se sustentava, existe um chamado silencioso para voltar para dentro. Para olhar para si com a mesma atenção que se dava ao que partiu.</p>
+    <p>Esse retorno não é imediato. Ele é feito de pequenos reconhecimentos: redescobrir o gosto de estar só, o prazer do silêncio, a paz em não precisar ser para alguém — apenas ser.</p>
+    <p>A ausência deixa espaço. E, com o tempo, esse espaço deixa de ser vazio e começa a ser abrigo.</p>
+    <p>É nesse retorno que se compreende: nada do que foi vivido foi em vão. Mas é apenas com a própria presença que se aprende a continuar.</p>
+     </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Há um momento...</p>
+    <p>— tênue, silencioso — em que a memória deixa de puxar de volta.</p>
+    <p>Não é que o sentimento desapareça, nem que o afeto se invalide. Mas a necessidade de retorno se dissolve. A urgência se acalma. A ideia de reencontro já não ocupa mais o centro da estrada.</p>
+    <p>Esse instante não costuma ser comemorado. Ele apenas acontece. Em meio a uma tarde comum, num gesto automático, ao perceber que já não se pensa tanto. Que já não se espera.</p>
+    <p>Não significa desamor. Significa liberdade.</p>
+    <p>O que antes prendia, agora apenas acompanha. Sem peso, sem expectativa.</p>
+    <p>É quando se percebe que voltar já não é necessário — porque o que precisava ser vivido, já foi. E o que restou, permanece como parte da paisagem interna: serena, discreta, imutável.</p>
+    </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+       <p>Entre o que foi dito e o que ficou por dizer, existe um território que raramente é explorado...</p>
+    <p>É ali que moram as pausas desconfortáveis, os olhares desviados, as intenções que não souberam se tornar palavras. Não por falta de sentimento, mas pela incapacidade humana de traduzir tudo em linguagem.</p>
+    <p>Há silêncios que gritam. Outros, apenas sussurram a ausência. Mas todos carregam algo que ainda persiste: um gesto que não foi retribuído, uma frase que chegou tarde, um toque que hesitou.</p>
+    <p>O que não foi nomeado continua existindo. E, em alguns casos, o que não se diz pesa tanto quanto aquilo que é dito.</p>
+    <p>Aprender a conviver com o não-dito é um exercício de maturidade. Nem tudo encontra forma. Nem tudo precisa ser compreendido para ser respeitado.</p>
+    <p>E talvez, aceitar esse espaço entre dois silêncios seja o primeiro passo para se permitir seguir.</p>
+     </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Com o tempo, o que era urgência se transforma em lembrança...</p>
+    <p>As emoções que antes ocupavam cada pensamento se acomodam em espaços mais sutis. E o que resta não é a insistência em reviver, mas a capacidade de reconhecer: aquilo foi real. E isso basta.</p>
+    <p>Não há como prever os caminhos que virão. Mas existe uma sabedoria silenciosa em aceitar que o passado, quando bem vivido, não exige retorno — apenas respeito</p>
+    <p>A memória deixa de ser prisão e passa a ser testemunho. Um registro calmo de que houve beleza. Houve cuidado. Houve uma tentativa genuína de partilha.</p>
+    <p>Que o futuro, então, seja leve. Que os vínculos que vierem carreguem verdade. Que o coração siga sensível, sem medo de sentir de novo.</p>
+    <p>Porque o amor, quando é pleno, continua existindo mesmo quando muda de forma. Ele se recolhe — mas não desaparece.</p>
+    </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>Nem toda separação é marcada por rupturas visíveis...</p>
+    <p>Algumas simplesmente acontecem, aos poucos, como uma maré que recua sem alarde.</p>
+    <p>O distanciamento, por vezes, não nasce da ausência de sentimento, mas da diferença de ritmos. Enquanto um coração se entrega, o outro talvez ainda aprenda a compreender o que sente. E nessa diferença de tempo, as pontes silenciosamente se desfazem.</p>
+    <p>Não há necessidade de culpados. Há apenas realidades distintas tentando coexistir.</p>
+    <p>É comum imaginar que o amor, por si só, sustente qualquer história. Mas o afeto, para florescer, exige espaço mútuo, escuta atenta, disposição para permanecer mesmo quando as certezas vacilam.</p>
+    <p>Quando isso falha, o que resta não é necessariamente dor. Às vezes é só o vazio sereno de algo que foi bonito, mas que não encontrou sustentação no tempo certo.</p>
+    <p>O fim, nesse caso, não grita. Ele apenas se acomoda como uma pausa longa demais. Uma ausência que, de tão contínua, passa a fazer parte da paisagem.</p>
+   </div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <img class="profile-pic" src="img/icon-lobo.png" alt="Foto de Perfil" />
+        <div>
+          <span class="post-user">01111001</span>
+          <p class="post-date">16 de Maio de 2025</p>
+        </div>
+      </div>
+      <div class="post-content">
+         <p>Algumas ligações não começam com promessas...</p>
+    <p>Elas nascem discretas, quase invisíveis — um gesto qualquer, um encontro imprevisto, um instante que não parecia carregar importância.</p>
+    <p>E ainda assim, algo se transforma.</p>
+    <p>Às vezes, o afeto se insinua antes mesmo de ser reconhecido. Ele não pede licença. Vai se fazendo presente no cotidiano, nos hábitos, nos espaços que antes eram ocupados apenas por si. Quando se nota, já não se trata mais de uma troca casual. Há uma conexão — íntima, imprecisa, mas profunda.</p>
+    <p>Não é raro que esses vínculos tragam consigo a sensação de familiaridade. Como se algo antigo se revelasse no novo. Como se, sem saber, a alma estivesse esperando exatamente por aquele tipo de presença.</p>
+    <p>Por um tempo, tudo parece se encaixar. Os gestos encontram reciprocidade. O silêncio é confortável. Há pertencimento.</p>
+    <p>E ainda que os caminhos sigam adiante, é possível que a lembrança desse encontro continue a ressoar — não como saudade, mas como testemunho de que, em algum momento, a vida ofereceu um abrigo em outro olhar.</p>
+    
+    </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Script do menu
+      const menuIcon = document.getElementById('menu-hamburguer');
+      const menuNav = document.getElementById('menu-nav');
+      if (menuIcon && menuNav) {
+        menuIcon.addEventListener('click', function() {
+          menuNav.classList.toggle('open');
+        });
+      }
+      
+      // Script para tocar música no card visível
+      const cardsComMusica = document.querySelectorAll('.post[data-card-musica="true"]');
+      
+      if (cardsComMusica.length > 0) {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const audio = entry.target.querySelector('.audio-player');
+            if (audio) {
+              if (entry.isIntersecting) {
+                // Pausa todos os áudios antes de tocar o novo
+                document.querySelectorAll('.audio-player').forEach(a => {
+                  if (a !== audio) {
+                    a.pause();
+                    a.currentTime = 0;
+                  }
+                });
+                // Card está na tela, toca a música
+                audio.play();
+              } else {
+                // Card saiu da tela, pausa a música
+                audio.pause();
+                audio.currentTime = 0; // Reinicia a música
+              }
+            }
+          });
+        }, observerOptions);
+
+        cardsComMusica.forEach(card => {
+          observer.observe(card);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="icon-lobo.png" type="image/png" />
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #222922; /* Cor de fundo principal */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif; /* Fonte principal para a página */
+      color: #717476; /* Cor do texto */
+    }
+
+    .login-container {
+      background-color: #101511; /* Fundo do contêiner */
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid #3D4633; /* Borda sutil */
+    }
+
+    .login-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-family: 'Dancing Script', cursive; /* Mantém a fonte do título */
+      color: #717476; /* Cor do título */
+    }
+
+    .login-container label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      text-align: left;
+    }
+
+    .login-container input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #3D4633;
+      background-color: #222922;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      color: #717476;
+    }
+
+    .login-container input:focus {
+      outline: none;
+      border-color: #717476;
+      box-shadow: 0 0 5px rgba(113, 116, 118, 0.5);
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3D4633; /* Cor do botão */
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.4rem;
+      font-family: 'Great Vibes', cursive; /* Mantém a fonte do botão */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #717476; /* Cor do botão ao passar o mouse */
+    }
+
+    #erro-mensagem {
+      color: #3D4633;
+      background-color: #717476;
+      padding: 8px;
+      border-radius: 4px;
+      margin-top: 15px;
+      font-size: 1rem;
+      display: none;
+      border: 1px solid #101511;
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Bem-vindo(a)</h1>
+    <form id="loginForm">
+      <label for="username">Usuário:</label>
+      <input type="text" id="username" name="username" required />
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required />
+      <button type="submit">Entrar</button>
+      <p id="erro-mensagem">Usuário ou senha incorretos. Tente novamente.</p>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
